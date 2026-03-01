@@ -7,6 +7,7 @@ DecryptDay 文件下载器
 import webbrowser
 import subprocess
 import json
+import requests
 from typing import Optional
 
 
@@ -73,10 +74,13 @@ def extract_file_ids(response_data: dict) -> list[dict]:
 
 
 def fetch_file_list(app_id: str, cf_clearance: str) -> Optional[dict]:
-    """使用 curl 发送 POST 请求获取文件列表"""
+    """发送 POST 请求获取文件列表（优先 curl，失败则用 requests）"""
     url = f"https://decrypt.day/app/{app_id}?/files"
     form_data = "163,101,97,112,112,73,100,120,25,99,108,57,115,101,52,48,116,55,48,48,53,53,100,111,102,119,49,120,111,54,49,109,119,120,103,118,101,114,115,105,111,110,101,54,46,52,46,48,105,105,115,80,114,101,109,105,101,114,247"
 
+    print(f"正在请求: {url}")
+
+    # 方式1: 使用 curl
     curl_cmd = [
         "curl", "-X", "POST", url,
         "-H", "Accept: */*",
@@ -90,26 +94,50 @@ def fetch_file_list(app_id: str, cf_clearance: str) -> Optional[dict]:
         "-F", f"data={form_data}",
     ]
 
-    print(f"正在请求: {url}")
-
     try:
         result = subprocess.run(curl_cmd, capture_output=True, text=True, timeout=30)
 
-        if result.returncode == 0:
+        if result.returncode == 0 and result.stdout:
             return json.loads(result.stdout)
         else:
-            print(f"curl 错误: {result.stderr}")
+            print(f"curl 执行失败: {result.stderr}")
+    except subprocess.TimeoutExpired:
+        print("curl 请求超时")
+    except FileNotFoundError:
+        print("curl 命令未找到")
+    except json.JSONDecodeError as e:
+        print(f"curl 响应 JSON 解析失败: {e}")
+    except Exception as e:
+        print(f"curl 执行出错: {e}")
+
+    # 方式2: 使用 requests 备用
+    print("正在尝试使用 requests 备用方案...")
+
+    headers = {
+        "Accept": "*/*",
+        "Accept-Language": "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,ja;q=0.6,zh-TW;q=0.5",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Origin": "https://decrypt.day",
+        "Referer": f"https://decrypt.day/app/{app_id}",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    }
+
+    cookies = {"cf_clearance": cf_clearance}
+
+    files = {"data": (None, form_data)}
+
+    try:
+        response = requests.post(url, headers=headers, cookies=cookies, files=files, timeout=30)
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print(f"requests 响应状态码: {response.status_code}")
             return None
 
-    except subprocess.TimeoutExpired:
-        print("请求超时")
-        return None
-    except json.JSONDecodeError as e:
-        print(f"JSON 解析错误: {e}")
-        print(f"响应内容: {result.stdout[:500]}")
-        return None
     except Exception as e:
-        print(f"请求出错: {e}")
+        print(f"requests 请求出错: {e}")
         return None
 
 
