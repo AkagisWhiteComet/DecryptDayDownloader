@@ -1,6 +1,8 @@
-# README
+# How to use
 
-decrypt.day下载砸壳ipa的时候经常遇到广告拦截后获取不到下载链接的情况，类似chrome这种自带拦截的又关不掉，非常麻烦，简单写了个脚本来半自动获取下载链接
+Whenever I try to download anything from Decrypt.day, I keep getting an error from the ad blocker. A huge thanks to [Y5neKO](https://github.com/Y5neKO) for the script that lets me get around this. This repository is a fork of the original [Y5neKO DecryptDayDownloader](https://github.com/Y5neKO/DecryptDayDownloader); I just translated it into English to make it easier to use.
+
+The script has been tested in Chrome and Firefox. Personally, I use Firefox.
 
 ![img_6.png](img/img_6.png)
 
