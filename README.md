@@ -1,22 +1,25 @@
-# How to use
-
+# MANUAL
+## What is it?
 Whenever I try to download anything from Decrypt.day, I keep getting an error from the ad blocker. A huge thanks to [Y5neKO](https://github.com/Y5neKO) for the script that lets me get around this. This repository is a fork of the original [Y5neKO DecryptDayDownloader](https://github.com/Y5neKO/DecryptDayDownloader); I just translated it into English to make it easier to use.
 
 The script has been tested in Chrome and Firefox. Personally, I use Firefox.
 
-![img_6.png](img/img_6.png)
+An example of a successful script execution:
+![img_0.png](img/img_0.png)
 
-## 半自动脚本
+## First things first
+### You need to fill in the “User-Agent” and “form_data” fields in the script.
+1. Open the page with the app you want to download.
+2. Open Dev Tools by pressing F12.
+3. Go to the “Network” tab and clear it (in Firefox, this is the trash can icon in the top-left corner).
+4. Click the “Download for free” button to generate new requests.
+5. You’re interested in the POST request that refers to “your_app_id”/files (it’s usually the very first one).
+6. Click on it, and in the “Request” field, you’ll see the request payload. Here, you need to copy the entire string containing numbers and paste it into the “form_data” field in the script file.
+![form_data](img/img_2.png)
+![form_data](img/img_4.png)
 
-直接运行
-
-![img_5.png](img/img_5.png)
-
-## 手动获取
-
-### 获取 cf_clearance
-
-![img.png](img/img.png)
+You can also find your “User-Agent” value here in the “Headers” tab by scrolling all the way to the bottom:
+![form_data](img/img_1.png)
 
 ### 获取文件列表
 
