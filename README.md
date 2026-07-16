@@ -20,6 +20,8 @@ I use the PyCharm IDE to run and edit scripts.
 6. Click on it, and in the "Request" field, you’ll see the request payload. Here, you need to copy the entire string containing numbers and paste it into the "form_data" field in the script file.
 
 ![form_data1](img/img_2.png)
+
+The desired line:
 ![form_data2](img/img_4.png)
 
 You can also find your "User-Agent" value here in the “Headers” tab by scrolling all the way to the bottom:
