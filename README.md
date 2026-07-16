@@ -19,12 +19,12 @@ I use the PyCharm IDE to run and edit scripts.
 5. You’re interested in the POST request that refers to "your_app_id"?/files (it’s usually the very first one).
 6. Click on it, and in the "Request" field, you’ll see the request payload. Here, you need to copy the entire string containing numbers and paste it into the "form_data" field in the script file.
 
-![form_data](img/img_2.png)
-![form_data](img/img_4.png)
+![form_data1](img/img_2.png)
+![form_data2](img/img_4.png)
 
 You can also find your "User-Agent" value here in the “Headers” tab by scrolling all the way to the bottom:
 
-![form_data](img/img_1.png)
+![User-Agent](img/img_1.png)
 
 IMPORTANT! The script contains two User-Agent fields; you must fill in both.
 
@@ -39,6 +39,23 @@ Next, you'll need to enter the value of your session cookie. Here's how to do it
 3. Find the field labeled "cf_clearance" and copy its value (double-clicking will help select the entire value field).
 
 ![cf_clearance](img/img_3.png)
+
+## Installation
+If you've done everything correctly, you should see the available download links.
+
+### Extension
+Next I recommend installing the HackBar extension to edit query parameters. I use [this one](https://addons.mozilla.org/ru/firefox/addon/firefox-hackbar/) (it’s also available in Chrome). Or you can download it from the GitHub repository if that’s more convenient for you: [hackbar](https://github.com/0140454/hackbar/releases/tag/v1.2.8).
+
+The HackBar tab should now appear in Dev Tools.
+
+### Downloading
+You're now in the home stretch. Follow these final steps:
+1. Copy one of the download links and paste it into your browser.
+2. Open Dev Tools again and go to the HackBar tab.
+3. Enter the same download link in the URL field.
+4. Click the MODIFY HEADER button, select Referer from the drop-down list, and paste the second (Referer) link provided by the script into the Value field.
+
+![Referer](img/img_5.png)
 
 ### 获取文件列表
 
