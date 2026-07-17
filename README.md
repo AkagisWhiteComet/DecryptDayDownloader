@@ -64,6 +64,3 @@ You should now see a window with a link to download what you need.
 
 ## Conclusion
 I hope this guide was helpful. Enjoy!
-![img_3.png](img/img_3.png)
-
-![img_4.png](img/img_4.png)
